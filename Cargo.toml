@@ -1,0 +1,14 @@
+[package]
+name = "tracers"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+debug = 1
+
+[dependencies]
+nalgebra = { version = "0.32.2" }
+sdl2 = { version = "0.35.2" }
+rand = { version = "0.8.5", features = ["small_rng"] }
+rand_distr = "0.4.3"
+image = "0.24.5"
