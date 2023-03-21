@@ -1,8 +1,10 @@
-pub mod quad;
-pub mod sphere;
+mod quad;
+mod sphere;
 
+pub use self::quad::Quad;
+pub use self::sphere::Sphere;
 use crate::material::Material;
-use crate::math::ray::Ray;
+use crate::math::Ray;
 use na::{Point3, UnitVector3};
 use rand::Rng;
 
@@ -17,3 +19,5 @@ pub trait Shape<R: Rng> {
     fn intersect(&self, ray: &Ray) -> Option<Intersection<R>>;
     fn material(&self) -> &dyn Material<R>;
 }
+
+pub type DynShape<R> = Box<dyn Shape<R> + Send + Sync>;

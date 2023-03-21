@@ -1,17 +1,17 @@
-use crate::material::Material;
-use crate::math::ray::Ray;
+use crate::material::{DynMaterial, Material};
 use crate::shape::{Intersection, Shape};
 use na::{Point3, UnitVector3, Vector3};
 use rand::Rng;
 use rand_distr::num_traits::{Signed, Zero};
 
+use crate::math::Ray;
 use std::ops::Neg;
 
 pub struct Quad<R: Rng> {
     p0: Point3<f32>,
     v1: Vector3<f32>,
     v2: Vector3<f32>,
-    material: Box<dyn Material<R>>,
+    material: DynMaterial<R>,
 }
 
 impl<R: Rng> Quad<R> {
@@ -19,7 +19,7 @@ impl<R: Rng> Quad<R> {
         p0: Point3<f32>,
         v1: Vector3<f32>,
         v2: Vector3<f32>,
-        material: Box<dyn Material<R>>,
+        material: DynMaterial<R>,
     ) -> Self {
         Self {
             p0,
@@ -29,7 +29,7 @@ impl<R: Rng> Quad<R> {
         }
     }
 
-    pub fn from_points<P>(p0: P, p1: P, p2: P, material: Box<dyn Material<R>>) -> Self
+    pub fn from_points<P>(p0: P, p1: P, p2: P, material: DynMaterial<R>) -> Self
     where
         P: Into<Point3<f32>>,
     {

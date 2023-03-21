@@ -1,5 +1,5 @@
-use crate::material::Material;
-use crate::math::ray::Ray;
+use crate::material::{DynMaterial, Material};
+use crate::math::Ray;
 use crate::shape::{Intersection, Shape};
 use na::{Point3, UnitVector3};
 use rand::Rng;
@@ -7,19 +7,15 @@ use rand::Rng;
 pub struct Sphere<R: Rng> {
     center: Point3<f32>,
     radius: f32,
-    material: Box<dyn Material<R>>,
+    material: DynMaterial<R>,
 }
 
 impl<R: Rng> Sphere<R> {
-    pub fn new<T: Into<Point3<f32>>, M: Material<R> + 'static>(
-        center: T,
-        radius: f32,
-        material: M,
-    ) -> Self {
+    pub fn new(center: Point3<f32>, radius: f32, material: DynMaterial<R>) -> Self {
         Self {
-            center: center.into(),
+            center,
             radius,
-            material: Box::new(material),
+            material,
         }
     }
 }

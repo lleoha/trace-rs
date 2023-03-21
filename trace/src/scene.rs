@@ -1,20 +1,20 @@
-use crate::math::ray::Ray;
-use crate::shape::{Intersection, Shape};
+use crate::camera::{Camera, DynCamera};
+use crate::math::Ray;
+use crate::shape::{DynShape, Intersection};
 use rand::Rng;
 
-pub struct Scene<R: Rng + ?Sized> {
-    objects: Vec<Box<dyn Shape<R>>>,
+pub struct Scene<R: Rng> {
+    camera: DynCamera,
+    objects: Vec<DynShape<R>>,
 }
 
 impl<R: Rng> Scene<R> {
-    pub fn new() -> Self {
-        Self {
-            objects: Vec::new(),
-        }
+    pub fn new(camera: DynCamera, objects: Vec<DynShape<R>>) -> Self {
+        Self { camera, objects }
     }
 
-    pub fn add(&mut self, object: impl Shape<R> + 'static) -> &mut Self {
-        self.objects.push(Box::new(object));
+    pub fn add(&mut self, object: DynShape<R>) -> &mut Self {
+        self.objects.push(object);
         self
     }
 
@@ -34,10 +34,8 @@ impl<R: Rng> Scene<R> {
 
         nearest_intersection
     }
-}
 
-impl<R: Rng> Default for Scene<R> {
-    fn default() -> Self {
-        Self::new()
+    pub fn camera(&self) -> &dyn Camera {
+        self.camera.as_ref()
     }
 }

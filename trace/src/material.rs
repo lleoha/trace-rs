@@ -1,11 +1,12 @@
-pub mod lambertian;
-pub mod refractive;
-pub mod specular;
+mod lambertian;
+mod refractive;
+mod specular;
 
+pub use self::lambertian::Lambertian;
+pub use self::specular::Specular;
 use crate::shape::Intersection;
 use crate::spectrum::Spectrum;
 use na::UnitVector3;
-
 use rand::Rng;
 
 pub trait Material<R: Rng> {
@@ -30,3 +31,5 @@ pub trait Material<R: Rng> {
         outgoing: &UnitVector3<f32>,
     ) -> Spectrum;
 }
+
+pub type DynMaterial<R> = Box<dyn Material<R> + Send + Sync>;
