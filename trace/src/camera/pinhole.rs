@@ -1,5 +1,5 @@
 use crate::camera::Camera;
-use crate::math::ray::Ray;
+use crate::math::Ray;
 use na::{Matrix4, Point3, UnitVector3, Vector3};
 
 pub struct PinholeCamera {
