@@ -11,27 +11,28 @@ pub struct Quad<R: Rng> {
     p0: Point3<f32>,
     v1: Vector3<f32>,
     v2: Vector3<f32>,
-    material: DynMaterial<R>,
+    material: Box<DynMaterial<R>>,
 }
 
 impl<R: Rng> Quad<R> {
-    pub fn new(
+    pub fn new<M: Material<R> + Send + Sync + 'static>(
         p0: Point3<f32>,
         v1: Vector3<f32>,
         v2: Vector3<f32>,
-        material: DynMaterial<R>,
+        material: M,
     ) -> Self {
         Self {
             p0,
             v1,
             v2,
-            material,
+            material: Box::new(material),
         }
     }
 
-    pub fn from_points<P>(p0: P, p1: P, p2: P, material: DynMaterial<R>) -> Self
+    pub fn from_points<P, M>(p0: P, p1: P, p2: P, material: M) -> Self
     where
         P: Into<Point3<f32>>,
+        M: Material<R> + Send + Sync + 'static,
     {
         let p0_point = p0.into();
         let p1_point = p1.into();
@@ -41,7 +42,7 @@ impl<R: Rng> Quad<R> {
             p0: p0_point,
             v1,
             v2,
-            material,
+            material: Box::new(material),
         }
     }
 }
@@ -70,7 +71,7 @@ impl<R: Rng> Shape<R> for Quad<R> {
             if t.is_positive() && (0.0..=1.0).contains(&u) && (0.0..=1.0).contains(&v) {
                 Some(Intersection {
                     distance: t,
-                    point: ray.origin() + ray.direction().into_inner() * t,
+                    point: ray.origin() + ray.direction().as_ref() * t,
                     normal: UnitVector3::new_normalize(v1_cross_v2),
                     shape: self,
                 })

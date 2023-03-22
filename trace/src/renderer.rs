@@ -6,9 +6,9 @@ use na::Vector3;
 use rand::rngs::ThreadRng;
 use rand::Rng;
 use rayon::prelude::*;
-use std::sync::{Arc, Mutex};
 use std::sync::atomic::AtomicU32;
 use std::sync::atomic::Ordering::Relaxed;
+use std::sync::{Arc, Mutex};
 
 pub struct Renderer {
     width: u32,
@@ -91,15 +91,16 @@ impl Renderer {
                     attenuation =
                         attenuation * material.attenuation(s, the_ray.direction(), &scattered);
 
-                    the_ray = Ray::new(s.point + &scattered.into_inner() * 0.005, scattered);
+                    the_ray = Ray::new(s.point + scattered.as_ref() * 0.005, scattered);
 
                     // russian roulette
                     if i >= soft_depth_limit {
-                        let p = attenuation.to_inner().max().clamp(0.0, 1.0);
+                        let p = attenuation.to_inner().max().clamp(0.01, 1.0);
                         if rng.gen::<f32>() > p {
                             break 'main_loop;
+                        } else {
+                            attenuation = attenuation * (1.0 / p);
                         }
-                        attenuation = attenuation * (1.0 / p);
                     }
                 }
             }

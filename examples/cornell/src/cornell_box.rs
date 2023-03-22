@@ -3,8 +3,8 @@ use trace::camera::PinholeCamera;
 use trace::material::Lambertian;
 use trace::material::Specular;
 use trace::scene::Scene;
+use trace::shape::Quad;
 use trace::shape::Sphere;
-use trace::shape::{DynShape, Quad};
 use trace::spectrum::Spectrum;
 
 pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
@@ -13,7 +13,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         [550.0, 0.0, 0.0],
         [0.0, 0.0, 0.0],
         [0.0, 0.0, 550.0],
-        Box::new(floor_material),
+        floor_material,
     );
 
     let light_material = Lambertian::new(
@@ -24,7 +24,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         [343.0, 549.9, 227.0],
         [343.0, 549.9, 332.0],
         [213.0, 549.9, 332.0],
-        Box::new(light_material),
+        light_material,
     );
 
     let ceiling_material = Lambertian::new(Spectrum::from([255, 255, 255]), Spectrum::zeros());
@@ -32,7 +32,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         [550.0, 550.0, 0.0],
         [550.0, 550.0, 550.0],
         [0.0, 550.0, 550.0],
-        Box::new(ceiling_material),
+        ceiling_material,
     );
 
     let back_wall_material = Lambertian::new(Spectrum::from([255, 255, 255]), Spectrum::zeros());
@@ -40,7 +40,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         [550.0, 0.0, 550.0],
         [0.0, 0.0, 550.0],
         [0.0, 550.0, 550.0],
-        Box::new(back_wall_material),
+        back_wall_material,
     );
 
     let right_wall_material =
@@ -49,7 +49,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         [0.0, 0.0, 550.0],
         [0.0, 0.0, 0.0],
         [0.0, 550.0, 0.0],
-        Box::new(right_wall_material),
+        right_wall_material,
     );
 
     let left_wall_material =
@@ -58,33 +58,14 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         [550.0, 0.0, 0.0],
         [550.0, 0.0, 550.0],
         [550.0, 550.0, 550.0],
-        Box::new(left_wall_material),
+        left_wall_material,
     );
 
     let sphere1_material = Specular::default();
-    let sphere_1 = Sphere::new(
-        [294.0, 120.0, 350.0].into(),
-        120.0,
-        Box::new(sphere1_material),
-    );
+    let sphere_1 = Sphere::new([294.0, 120.0, 350.0].into(), 120.0, sphere1_material);
 
     let sphere2_material = Specular::default();
-    let sphere_2 = Sphere::new(
-        [400.0, 80.0, 150.0].into(),
-        80.0,
-        Box::new(sphere2_material),
-    );
-
-    let shapes: Vec<DynShape<R>> = vec![
-        Box::new(floor),
-        Box::new(ceiling),
-        Box::new(back_wall),
-        Box::new(left_wall),
-        Box::new(right_wall),
-        Box::new(sphere_1),
-        Box::new(sphere_2),
-        Box::new(light),
-    ];
+    let sphere_2 = Sphere::new([400.0, 80.0, 150.0].into(), 80.0, sphere2_material);
 
     let camera = PinholeCamera::new(
         &[278.0, 273.0, -800.0].into(),
@@ -94,5 +75,16 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         37.0_f32.to_radians(),
     );
 
-    Scene::new(Box::new(camera), shapes)
+    let mut scene = Scene::new(camera);
+    scene
+        .add(floor)
+        .add(ceiling)
+        .add(back_wall)
+        .add(left_wall)
+        .add(right_wall)
+        .add(sphere_1)
+        .add(sphere_2)
+        .add(light);
+
+    scene
 }

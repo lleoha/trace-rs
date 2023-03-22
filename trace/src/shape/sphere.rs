@@ -7,15 +7,19 @@ use rand::Rng;
 pub struct Sphere<R: Rng> {
     center: Point3<f32>,
     radius: f32,
-    material: DynMaterial<R>,
+    material: Box<DynMaterial<R>>,
 }
 
 impl<R: Rng> Sphere<R> {
-    pub fn new(center: Point3<f32>, radius: f32, material: DynMaterial<R>) -> Self {
+    pub fn new<M: Material<R> + Send + Sync + 'static>(
+        center: Point3<f32>,
+        radius: f32,
+        material: M,
+    ) -> Self {
         Self {
             center,
             radius,
-            material,
+            material: Box::new(material),
         }
     }
 }
@@ -39,7 +43,7 @@ impl<R: Rng> Shape<R> for Sphere<R> {
             };
 
             d.map(|distance| {
-                let point = ray.origin() + (ray.direction().into_inner() * distance);
+                let point = ray.origin() + (ray.direction().as_ref() * distance);
                 Intersection {
                     distance,
                     point,

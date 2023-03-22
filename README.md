@@ -19,7 +19,7 @@ This project is not complete nor correct by any means. It was created for the fo
 * [ ] light dispersion (stretch)
 
 ## Known bugs
-* occasionally NaN values are return from trace method
+* ~~occasionally NaN values are return from trace method~~
 
 ## Non-goals
 * be fast

@@ -64,7 +64,8 @@ where
 impl Distribution<UnitVector3<f32>> for CosineUnitHemisphere {
     fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> UnitVector3<f32> {
         UnitVector3::new_normalize(
-            self.direction.into_inner() + Vector3::from(self.unit_sphere_distribution.sample(rng)),
+            self.direction.as_ref() * 1.005
+                + Vector3::from(self.unit_sphere_distribution.sample(rng)),
         )
     }
 }
