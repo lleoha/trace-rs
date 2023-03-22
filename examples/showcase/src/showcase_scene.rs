@@ -1,7 +1,7 @@
 use num_complex::Complex;
 use rand::Rng;
 use trace::camera::PinholeCamera;
-use trace::material::{Lambertian, Metal};
+use trace::material::{Lambertian, Metal, Translucent};
 use trace::scene::Scene;
 use trace::shape::{Quad, Sphere};
 use trace::spectrum::Spectrum;
@@ -17,9 +17,9 @@ pub fn create_scene<R: Rng + 'static>() -> Scene<R> {
 
     let light_material = Lambertian::new(Spectrum::zeros(), Spectrum::new([1.5, 1.5, 1.5].into()));
     let light = Quad::new(
-        [-10.0, 10.0, -10.0].into(),
-        [10.0, 10.0, -10.0].into(),
-        [10.0, 10.0, 10.0].into(),
+        [-10.0, 10.0, -5.0].into(),
+        [10.0, 10.0, -5.0].into(),
+        [10.0, 10.0, 15.0].into(),
         light_material,
     );
 
@@ -32,17 +32,21 @@ pub fn create_scene<R: Rng + 'static>() -> Scene<R> {
     );
 
     let matte = Lambertian::new(Spectrum::from([240, 100, 0]), Spectrum::zeros());
-    let matte_ball = Sphere::new([-1.0, 0.71, 0.0].into(), 0.7, matte);
+    let matte_ball = Sphere::new([-2.0, 0.71, 0.0].into(), 0.7, matte);
 
     let silver = Metal::new(Complex::new(0.051585, 3.9046));
-    let silver_ball = Sphere::new([1.0, 0.71, 0.0].into(), 0.7, silver);
+    let silver_ball = Sphere::new([0.0, 0.71, 0.0].into(), 0.7, silver);
+
+    let translucent = Translucent::new(1.5168);
+    let translucent_ball = Sphere::new([2.0, 0.71, 0.0].into(), 0.7, translucent);
 
     let mut scene = Scene::new(camera);
     scene
         .add(floor)
         .add(light)
         .add(matte_ball)
-        .add(silver_ball);
+        .add(silver_ball)
+        .add(translucent_ball);
 
     scene
 }

@@ -2,7 +2,7 @@ use num_complex::Complex;
 use rand::Rng;
 use trace::camera::PinholeCamera;
 use trace::material::{Lambertian, Metal};
-use trace::material::Specular;
+
 use trace::scene::Scene;
 use trace::shape::Quad;
 use trace::shape::Sphere;

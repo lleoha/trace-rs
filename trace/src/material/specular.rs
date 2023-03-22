@@ -3,7 +3,7 @@ use crate::shape::Intersection;
 use crate::spectrum::Spectrum;
 use na::{UnitVector3, Vector3};
 use rand::Rng;
-use std::ops::Neg;
+
 use crate::math::utils::reflect;
 
 #[derive(Default)]

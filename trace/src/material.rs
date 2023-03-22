@@ -1,11 +1,13 @@
 mod lambertian;
+mod metal;
 mod refractive;
 mod specular;
-mod metal;
+mod translucent;
 
 pub use self::lambertian::Lambertian;
-pub use self::specular::Specular;
 pub use self::metal::Metal;
+pub use self::specular::Specular;
+pub use self::translucent::Translucent;
 use crate::shape::Intersection;
 use crate::spectrum::Spectrum;
 use na::UnitVector3;

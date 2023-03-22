@@ -18,7 +18,7 @@ This project is not complete nor correct by any means. It was created for the fo
 * [x] multi-threaded rendering
 * [x] importance sampling
 * [x] antialiasing
-* [ ] refraction
+* [x] refraction
 * [ ] depth of field
 * [ ] serialize and deserialize scene (.obj loader)
 * [ ] light dispersion (stretch)

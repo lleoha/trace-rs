@@ -1,11 +1,11 @@
+use crate::showcase_scene::create_scene;
+use image::buffer::ConvertBuffer;
+use image::{ImageBuffer, Rgb};
 use std::error::Error;
 use std::path::Path;
 use std::time::Instant;
-use image::{ImageBuffer, Rgb};
-use image::buffer::ConvertBuffer;
 use trace::renderer::Renderer;
 use trace::spectrum::Spectrum;
-use crate::showcase_scene::create_scene;
 
 mod showcase_scene;
 
@@ -21,7 +21,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("Rendering time: {}s.", duration.as_secs_f32());
 
     let image_rgb: ImageBuffer<Rgb<u8>, _> = image.convert();
-    image_rgb.save(Path::new("../../../docs/showcase.png"))?;
+    image_rgb.save(Path::new("../../../docs/showcase_10k.png"))?;
 
     Ok(())
 }

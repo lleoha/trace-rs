@@ -3,9 +3,6 @@ name = "showcase"
 version = "0.1.0"
 edition = "2021"
 
-[profile.release]
-debug = 1
-
 [dependencies]
 trace = { path = "../../trace" }
 image = "0.24.5"
