@@ -1,6 +1,7 @@
+use num_complex::Complex;
 use rand::Rng;
 use trace::camera::PinholeCamera;
-use trace::material::Lambertian;
+use trace::material::{Lambertian, Metal};
 use trace::material::Specular;
 use trace::scene::Scene;
 use trace::shape::Quad;
@@ -18,7 +19,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
 
     let light_material = Lambertian::new(
         Spectrum::new([0.78, 0.78, 0.78].into()),
-        Spectrum::new([4.5, 4.0, 2.0].into()),
+        Spectrum::new([5.5, 5.0, 2.5].into()),
     );
     let light = Quad::from_points(
         [343.0, 549.9, 227.0],
@@ -44,7 +45,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
     );
 
     let right_wall_material =
-        Lambertian::new(Spectrum::from([255, 0, 0]), Spectrum::from([0, 0, 0]));
+        Lambertian::new(Spectrum::from([200, 0, 0]), Spectrum::from([0, 0, 0]));
     let right_wall = Quad::from_points(
         [0.0, 0.0, 550.0],
         [0.0, 0.0, 0.0],
@@ -53,7 +54,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
     );
 
     let left_wall_material =
-        Lambertian::new(Spectrum::from([0, 255, 0]), Spectrum::from([0, 0, 0]));
+        Lambertian::new(Spectrum::from([0, 200, 0]), Spectrum::from([0, 0, 0]));
     let left_wall = Quad::from_points(
         [550.0, 0.0, 0.0],
         [550.0, 0.0, 550.0],
@@ -61,11 +62,11 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         left_wall_material,
     );
 
-    let sphere1_material = Specular::default();
-    let sphere_1 = Sphere::new([294.0, 120.0, 350.0].into(), 120.0, sphere1_material);
+    let sphere1_silver = Metal::new(Complex::new(0.051585, 3.9046));
+    let sphere_1 = Sphere::new([294.0, 120.0, 350.0].into(), 120.0, sphere1_silver);
 
-    let sphere2_material = Specular::default();
-    let sphere_2 = Sphere::new([400.0, 80.0, 150.0].into(), 80.0, sphere2_material);
+    let sphere2_silver = Metal::new(Complex::new(0.051585, 3.9046));
+    let sphere_2 = Sphere::new([400.0, 80.0, 150.0].into(), 80.0, sphere2_silver);
 
     let camera = PinholeCamera::new(
         &[278.0, 273.0, -800.0].into(),

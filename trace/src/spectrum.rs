@@ -17,6 +17,12 @@ impl Spectrum {
         }
     }
 
+    pub fn ones() -> Self {
+        Self {
+            value: Vector3::new(1.0, 1.0, 1.0)
+        }
+    }
+
     pub fn to_srgb(&self) -> [f32; 3] {
         *self.value.map(Self::gamma).as_ref()
     }
