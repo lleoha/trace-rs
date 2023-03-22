@@ -20,4 +20,4 @@ pub trait Shape<R: Rng> {
     fn material(&self) -> &dyn Material<R>;
 }
 
-pub type DynShape<R> = Box<dyn Shape<R> + Send + Sync>;
+pub type DynShape<R> = dyn Shape<R> + Send + Sync;

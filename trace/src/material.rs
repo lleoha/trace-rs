@@ -32,4 +32,4 @@ pub trait Material<R: Rng> {
     ) -> Spectrum;
 }
 
-pub type DynMaterial<R> = Box<dyn Material<R> + Send + Sync>;
+pub type DynMaterial<R> = dyn Material<R> + Send + Sync;

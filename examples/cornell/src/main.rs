@@ -17,12 +17,12 @@ fn main() -> Result<(), Box<dyn Error>> {
     let renderer = Renderer::new(width, height, Spectrum::zeros());
 
     let start = Instant::now();
-    let image = renderer.render(&cornell_box, 2000, 10, 50);
+    let image = renderer.render(&cornell_box, 5_000, 5, 50);
     let duration = Instant::now() - start;
     println!("Rendering time: {}s.", duration.as_secs_f32());
 
     let image_rgb: ImageBuffer<Rgb<u8>, _> = image.convert();
-    image_rgb.save(Path::new("./cornell.png")).unwrap();
+    image_rgb.save(Path::new("./cornell.png"))?;
 
     Ok(())
 }

@@ -3,16 +3,17 @@ use crate::shape::Intersection;
 use crate::spectrum::Spectrum;
 use na::{UnitVector3, Vector3};
 use rand::Rng;
+use std::ops::Neg;
 
 #[derive(Default)]
 pub struct Specular {}
 
 impl Specular {
     fn reflect(incoming: &UnitVector3<f32>, normal: &UnitVector3<f32>) -> UnitVector3<f32> {
-        let n = normal.into_inner();
-        let l = incoming.into_inner();
+        let n = normal.as_ref();
+        let l = incoming.as_ref();
 
-        UnitVector3::new_unchecked(n * n.dot(&-l) * 2.0 + l)
+        UnitVector3::new_unchecked(n * n.dot(&l.neg()) * 2.0 + l)
     }
 }
 

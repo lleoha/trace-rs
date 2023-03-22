@@ -1,20 +1,23 @@
 use crate::camera::{Camera, DynCamera};
 use crate::math::Ray;
-use crate::shape::{DynShape, Intersection};
+use crate::shape::{DynShape, Intersection, Shape};
 use rand::Rng;
 
 pub struct Scene<R: Rng> {
-    camera: DynCamera,
-    objects: Vec<DynShape<R>>,
+    camera: Box<DynCamera>,
+    objects: Vec<Box<DynShape<R>>>,
 }
 
 impl<R: Rng> Scene<R> {
-    pub fn new(camera: DynCamera, objects: Vec<DynShape<R>>) -> Self {
-        Self { camera, objects }
+    pub fn new<C: Camera + Send + Sync + 'static>(camera: C) -> Self {
+        Self {
+            camera: Box::new(camera),
+            objects: Vec::new(),
+        }
     }
 
-    pub fn add(&mut self, object: DynShape<R>) -> &mut Self {
-        self.objects.push(object);
+    pub fn add<S: Shape<R> + Send + Sync + 'static>(&mut self, shape: S) -> &mut Self {
+        self.objects.push(Box::new(shape));
         self
     }
 

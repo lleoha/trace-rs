@@ -7,4 +7,4 @@ pub trait Camera {
     fn sample(&self, x: f32, y: f32) -> Ray;
 }
 
-pub type DynCamera = Box<dyn Camera + Send + Sync>;
+pub type DynCamera = dyn Camera + Send + Sync;
