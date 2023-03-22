@@ -1,5 +1,5 @@
 [package]
-name = "cornell"
+name = "showcase"
 version = "0.1.0"
 edition = "2021"
 
@@ -13,4 +13,4 @@ rand = "0.8.5"
 num-complex = "0.4.3"
 
 [[bin]]
-name = "cornell"
+name = "showcase"

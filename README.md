@@ -1,7 +1,10 @@
 # TRACE-RS
 This is yet another ray tracer (with global illumination).
-It renders following image in the current state of the project:
-![image](docs/cornell_5000.png)
+It renders following image in ~15 minutes in the current state of the project with 10k samples/pixel:
+![image](docs/cornell_10k.png)
+
+And following image in ~5m with 10k samples:
+![image](docs/showcase_10k.png)
 
 ## Rationale
 This project is not complete nor correct by any means. It was created for the following purposes:
