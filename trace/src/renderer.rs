@@ -56,10 +56,6 @@ impl Renderer {
             println!("{}/{}", counter.fetch_add(1, Relaxed), self.height);
         });
 
-        // (0..self.height).par_iter_mut().for_each(|y| {
-
-        // });
-
         Arc::try_unwrap(buffer).unwrap().into_inner().unwrap()
     }
 

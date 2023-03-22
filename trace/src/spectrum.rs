@@ -19,7 +19,7 @@ impl Spectrum {
 
     pub fn ones() -> Self {
         Self {
-            value: Vector3::new(1.0, 1.0, 1.0)
+            value: Vector3::new(1.0, 1.0, 1.0),
         }
     }
 

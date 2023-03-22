@@ -3,3 +3,6 @@ members = [
     "trace",
     "examples/*",
 ]
+
+[profile.release]
+debug = 1
