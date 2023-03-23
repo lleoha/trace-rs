@@ -4,12 +4,12 @@ use crate::shape::{DynShape, Intersection, Shape};
 use rand::Rng;
 
 pub struct Scene<R: Rng> {
-    camera: Box<DynCamera>,
+    camera: Box<DynCamera<R>>,
     objects: Vec<Box<DynShape<R>>>,
 }
 
 impl<R: Rng> Scene<R> {
-    pub fn new<C: Camera + Send + Sync + 'static>(camera: C) -> Self {
+    pub fn new<C: Camera<R> + Send + Sync + 'static>(camera: C) -> Self {
         Self {
             camera: Box::new(camera),
             objects: Vec::new(),
@@ -38,7 +38,7 @@ impl<R: Rng> Scene<R> {
         nearest_intersection
     }
 
-    pub fn camera(&self) -> &dyn Camera {
+    pub fn camera(&self) -> &dyn Camera<R> {
         self.camera.as_ref()
     }
 }

@@ -1,6 +1,7 @@
 use crate::camera::Camera;
 use crate::math::Ray;
 use na::{Matrix4, Point3, UnitVector3, Vector3};
+use rand::Rng;
 
 pub struct PinholeCamera {
     look_at_inv: Matrix4<f32>,
@@ -28,8 +29,8 @@ impl PinholeCamera {
     }
 }
 
-impl Camera for PinholeCamera {
-    fn sample(&self, x: f32, y: f32) -> Ray {
+impl<R: Rng> Camera<R> for PinholeCamera {
+    fn sample(&self, _rng: &mut R, x: f32, y: f32) -> Ray {
         let origin = self
             .look_at_inv
             .transform_point(&Point3::from([0.0, 0.0, 0.0]));
