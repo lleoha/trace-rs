@@ -17,19 +17,11 @@ pub fn create_scene<R: Rng + 'static>() -> Scene<R> {
 
     let light_material = Lambertian::new(Spectrum::zeros(), Spectrum::new([1.5, 1.5, 1.5].into()));
     let light = Quad::new(
-        [-10.0, 10.0, -0.0].into(),
-        [10.0, 10.0, -0.0].into(),
-        [10.0, 10.0, 10.0].into(),
+        [-10.0, 10.0, -5.0].into(),
+        [10.0, 10.0, -15.0].into(),
+        [10.0, 10.0, 15.0].into(),
         light_material,
     );
-
-    // let camera = PinholeCamera::new(
-    //     &[0.0, 1.5, -5.0].into(),
-    //     &[0.0, 0.7, 0.0].into(),
-    //     &[0.0, 1.0, 0.0].into(),
-    //     1920.0 / 1080.0,
-    //     60.0_f32.to_radians(),
-    // );
 
     let camera = ThinLensCamera::new(
         &[0.0, 1.5, -5.0].into(),
@@ -37,7 +29,7 @@ pub fn create_scene<R: Rng + 'static>() -> Scene<R> {
         &[0.0, 1.0, 0.0].into(),
         1920.0 / 1080.0,
         60.0_f32.to_radians(),
-        0.5,
+        0.4,
         5.0,
     );
 
