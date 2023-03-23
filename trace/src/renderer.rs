@@ -45,7 +45,7 @@ impl Renderer {
                     let y_offset = rng.gen::<f32>() - 0.5;
                     let fx = ((x as f32 + 0.5 + x_offset) / (self.width as f32) - 0.5) * 2.0;
                     let fy = ((y as f32 + 0.5 + y_offset) / (self.height as f32) - 0.5) * 2.0;
-                    let ray = scene.camera().sample(fx, -fy);
+                    let ray = scene.camera().sample(&mut rng, fx, -fy);
                     color =
                         color + self.trace(&mut rng, scene, ray, soft_max_depth, hard_max_depth);
                 }

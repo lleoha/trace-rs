@@ -2,11 +2,14 @@
 This is yet another ray tracer (with global illumination).
 It renders following image in ~15 minutes in the current state of the project with 10k samples/pixel:
 
-![image](docs/cornell_10k.png)
+![cornell box](docs/cornell_10k.png)
 
-And following image in ~5m with 10k samples:
+And following images in ~5m with 10k samples:
 
-![image](docs/showcase_10k.png)
+![showcase](docs/showcase_10k.png)
+
+![dof](docs/dof_10k.png)
+
 
 ## Rationale
 This project is not complete nor correct by any means. It was created for the following purposes:
@@ -19,7 +22,7 @@ This project is not complete nor correct by any means. It was created for the fo
 * [x] importance sampling
 * [x] antialiasing
 * [x] refraction
-* [ ] depth of field
+* [x] depth of field
 * [ ] serialize and deserialize scene (.obj loader)
 * [ ] light dispersion (stretch)
 

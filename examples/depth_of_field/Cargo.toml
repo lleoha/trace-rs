@@ -1,0 +1,13 @@
+[package]
+name = "depth_of_field"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+trace = { path = "../../trace" }
+image = "0.24.5"
+rand = "0.8.5"
+num-complex = "0.4.3"
+
+[[bin]]
+name = "depth_of_field"
