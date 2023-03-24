@@ -1,8 +1,10 @@
 mod quad;
 mod sphere;
+mod triangle;
 
 pub use self::quad::Quad;
 pub use self::sphere::Sphere;
+pub use self::triangle::Triangle;
 use crate::material::Material;
 use crate::math::Ray;
 use na::{Point3, UnitVector3};

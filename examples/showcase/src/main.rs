@@ -21,7 +21,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("Rendering time: {}s.", duration.as_secs_f32());
 
     let image_rgb: ImageBuffer<Rgb<u8>, _> = image.convert();
-    image_rgb.save(Path::new("../../../docs/showcase_10k.png"))?;
+    image_rgb.save(Path::new("showcase_10k.png"))?;
 
     Ok(())
 }

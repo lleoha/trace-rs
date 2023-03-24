@@ -3,9 +3,6 @@ name = "trace"
 version = "0.1.0"
 edition = "2021"
 
-[profile.release]
-debug = 1
-
 [dependencies]
 nalgebra = { version = "0.32.2" }
 rand = { version = "0.8.5", features = ["small_rng"] }

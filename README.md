@@ -23,7 +23,10 @@ This project is not complete nor correct by any means. It was created for the fo
 * [x] antialiasing
 * [x] refraction
 * [x] depth of field
+* [x] russian roulette
+* [ ] textures
 * [ ] serialize and deserialize scene (.obj loader)
+* [ ] spectra rendering (instead of RGB)
 * [ ] light dispersion (stretch)
 
 ## Known bugs
@@ -32,6 +35,7 @@ This project is not complete nor correct by any means. It was created for the fo
 ## Non-goals
 * be fast
 * be efficient
+* model diffraction
 
 ## References
 * https://github.com/mmp/pbrt-v4
