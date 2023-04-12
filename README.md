@@ -26,7 +26,7 @@ This project is not complete nor correct by any means. It was created for the fo
 * [x] russian roulette
 * [ ] textures
 * [ ] serialize and deserialize scene (.obj loader)
-* [ ] spectra rendering (instead of RGB)
+* [x] spectra rendering (instead of RGB)
 * [ ] light dispersion (stretch)
 
 ## Known bugs
@@ -41,6 +41,7 @@ This project is not complete nor correct by any means. It was created for the fo
 * https://github.com/mmp/pbrt-v4
 * https://raytracing.github.io/
 * https://www.kevinbeason.com/smallpt
+* http://www.brucelindbloom.com/
 * https://en.wikipedia.org/wiki/Bidirectional_reflectance_distribution_function
 * https://en.wikipedia.org/wiki/Lambertian_reflectance
 * https://en.wikipedia.org/wiki/Snell%27s_law
