@@ -1,14 +1,13 @@
 use crate::math::Ray;
 use crate::scene::Scene;
-use crate::spectrum::Spectrum;
 use image::{ImageBuffer, Rgb};
-use na::Vector3;
 use rand::rngs::ThreadRng;
 use rand::Rng;
 use rayon::prelude::*;
 use std::sync::atomic::AtomicU32;
 use std::sync::atomic::Ordering::Relaxed;
 use std::sync::{Arc, Mutex};
+use crate::color::spectrum::Spectrum;
 
 pub struct Renderer {
     width: u32,
@@ -39,7 +38,7 @@ impl Renderer {
             let mut rng = ThreadRng::default();
 
             for x in 0..self.width {
-                let mut color = Spectrum::new(Vector3::zeros());
+                let mut color = Spectrum::black();
                 for _ in 0..samples {
                     let x_offset = rng.gen::<f32>() - 0.5;
                     let y_offset = rng.gen::<f32>() - 0.5;
@@ -50,7 +49,7 @@ impl Renderer {
                         color + self.trace(&mut rng, scene, ray, soft_max_depth, hard_max_depth);
                 }
                 color = color * (1.0 / samples as f32);
-                buffer.lock().unwrap().put_pixel(x, y, Rgb(color.to_srgb()));
+                buffer.lock().unwrap().put_pixel(x, y, Rgb(color.to_srgb().as_ref().clone()));
             }
 
             println!("{}/{}", counter.fetch_add(1, Relaxed), self.height);
@@ -67,8 +66,8 @@ impl Renderer {
         soft_depth_limit: u32,
         hard_depth_limit: u32,
     ) -> Spectrum {
-        let mut color = Spectrum::new([0.0, 0.0, 0.0].into());
-        let mut attenuation = Spectrum::new([1.0, 1.0, 1.0].into());
+        let mut color = Spectrum::black();
+        let mut attenuation = Spectrum::white();
 
         let mut the_ray = ray;
         'main_loop: for i in 0..hard_depth_limit {

@@ -1,15 +1,17 @@
+use std::ops::Deref;
 use num_complex::Complex;
 use rand::Rng;
 use trace::camera::PinholeCamera;
+use trace::color::spectrum::Spectrum;
 use trace::material::{Lambertian, Metal};
 
 use trace::scene::Scene;
 use trace::shape::Quad;
 use trace::shape::Sphere;
-use trace::spectrum::Spectrum;
+use crate::data::{GREEN, LIGHT, RED, WHITE};
 
 pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
-    let floor_material = Lambertian::new(Spectrum::new([1.0, 1.0, 1.0].into()), Spectrum::zeros());
+    let floor_material = Lambertian::new(Spectrum::from(WHITE.deref()), Spectrum::black());
     let floor = Quad::from_points(
         [550.0, 0.0, 0.0],
         [0.0, 0.0, 0.0],
@@ -18,8 +20,8 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
     );
 
     let light_material = Lambertian::new(
-        Spectrum::new([0.78, 0.78, 0.78].into()),
-        Spectrum::new([5.5, 5.0, 2.5].into()),
+        Spectrum::white() * 0.78,
+        Spectrum::from(LIGHT.deref()),
     );
     let light = Quad::from_points(
         [343.0, 549.9, 227.0],
@@ -28,7 +30,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         light_material,
     );
 
-    let ceiling_material = Lambertian::new(Spectrum::from([255, 255, 255]), Spectrum::zeros());
+    let ceiling_material = Lambertian::new(Spectrum::from(WHITE.deref()), Spectrum::black());
     let ceiling = Quad::from_points(
         [550.0, 550.0, 0.0],
         [550.0, 550.0, 550.0],
@@ -36,7 +38,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         ceiling_material,
     );
 
-    let back_wall_material = Lambertian::new(Spectrum::from([255, 255, 255]), Spectrum::zeros());
+    let back_wall_material = Lambertian::new(Spectrum::from(WHITE.deref()), Spectrum::black());
     let back_wall = Quad::from_points(
         [550.0, 0.0, 550.0],
         [0.0, 0.0, 550.0],
@@ -45,7 +47,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
     );
 
     let right_wall_material =
-        Lambertian::new(Spectrum::from([200, 0, 0]), Spectrum::from([0, 0, 0]));
+        Lambertian::new(Spectrum::from(RED.deref()), Spectrum::black());
     let right_wall = Quad::from_points(
         [0.0, 0.0, 550.0],
         [0.0, 0.0, 0.0],
@@ -54,7 +56,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
     );
 
     let left_wall_material =
-        Lambertian::new(Spectrum::from([0, 200, 0]), Spectrum::from([0, 0, 0]));
+        Lambertian::new(Spectrum::from(GREEN.deref()), Spectrum::black());
     let left_wall = Quad::from_points(
         [550.0, 0.0, 0.0],
         [550.0, 0.0, 550.0],

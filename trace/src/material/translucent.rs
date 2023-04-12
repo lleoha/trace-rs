@@ -1,9 +1,9 @@
 use crate::material::Material;
 use crate::math::utils::{fresnel, reflect, refract};
 use crate::shape::Intersection;
-use crate::spectrum::Spectrum;
 use na::UnitVector3;
 use rand::Rng;
+use crate::color::spectrum::Spectrum;
 
 pub struct Translucent {
     refractive_index: f32,
@@ -47,7 +47,7 @@ impl<R: Rng> Material<R> for Translucent {
         _incoming: &UnitVector3<f32>,
         _outgoing: &UnitVector3<f32>,
     ) -> Spectrum {
-        Spectrum::ones()
+        Spectrum::white()
     }
 
     fn emission(
@@ -56,6 +56,6 @@ impl<R: Rng> Material<R> for Translucent {
         _incoming: &UnitVector3<f32>,
         _outgoing: &UnitVector3<f32>,
     ) -> Spectrum {
-        Spectrum::zeros()
+        Spectrum::black()
     }
 }

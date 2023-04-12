@@ -9,9 +9,9 @@ pub use self::metal::Metal;
 pub use self::specular::Specular;
 pub use self::translucent::Translucent;
 use crate::shape::Intersection;
-use crate::spectrum::Spectrum;
 use na::UnitVector3;
 use rand::Rng;
+use crate::color::spectrum::Spectrum;
 
 pub trait Material<R: Rng> {
     fn scatter(

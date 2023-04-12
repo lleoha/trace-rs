@@ -70,7 +70,9 @@ name = "cornell"
 version = "0.1.0"
 dependencies = [
  "image",
+ "nalgebra",
  "num-complex",
+ "once_cell",
  "rand",
  "trace",
 ]
@@ -657,6 +659,7 @@ version = "0.1.0"
 dependencies = [
  "image",
  "nalgebra",
+ "once_cell",
  "rand",
  "rand_distr",
  "rayon",

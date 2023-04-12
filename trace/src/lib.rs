@@ -6,4 +6,5 @@ pub mod math;
 pub mod renderer;
 pub mod scene;
 pub mod shape;
-pub mod spectrum;
+pub mod data;
+pub mod color;

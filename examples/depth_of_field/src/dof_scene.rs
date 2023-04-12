@@ -1,13 +1,13 @@
 use num_complex::Complex;
 use rand::Rng;
 use trace::camera::ThinLensCamera;
+use trace::color::spectrum::Spectrum;
 use trace::material::{Lambertian, Metal, Translucent};
 use trace::scene::Scene;
 use trace::shape::{Quad, Sphere};
-use trace::spectrum::Spectrum;
 
 pub fn create_scene<R: Rng + 'static>() -> Scene<R> {
-    let floor_material = Lambertian::new(Spectrum::new([0.5, 1.0, 0.3].into()), Spectrum::zeros());
+    let floor_material = Lambertian::new(Spectrum::from_srgb(&[0.5, 1.0, 0.3].into()), Spectrum::black());
     let floor = Quad::from_points(
         [-1000.0, 0.0, -1000.0],
         [-1000.0, 0.0, 1000.0],
@@ -15,7 +15,7 @@ pub fn create_scene<R: Rng + 'static>() -> Scene<R> {
         floor_material,
     );
 
-    let light_material = Lambertian::new(Spectrum::zeros(), Spectrum::new([1.5, 1.5, 1.5].into()));
+    let light_material = Lambertian::new(Spectrum::black(), Spectrum::from_linear_rgb(&[1.5, 1.5, 1.5].into()));
     let light = Quad::new(
         [-10.0, 10.0, -5.0].into(),
         [10.0, 10.0, -15.0].into(),
@@ -33,7 +33,7 @@ pub fn create_scene<R: Rng + 'static>() -> Scene<R> {
         5.0,
     );
 
-    let matte = Lambertian::new(Spectrum::from([240, 100, 0]), Spectrum::zeros());
+    let matte = Lambertian::new(Spectrum::from_srgb_u8(&[240, 100, 0].into()), Spectrum::black());
     let matte_ball = Sphere::new([-2.0, 0.71, 1.5].into(), 0.7, matte);
 
     let translucent = Translucent::new(1.5168);

@@ -1,8 +1,8 @@
 use crate::material::Material;
 use crate::shape::Intersection;
-use crate::spectrum::Spectrum;
-use na::{UnitVector3, Vector3};
+use na::UnitVector3;
 use rand::Rng;
+use crate::color::spectrum::Spectrum;
 
 use crate::math::utils::reflect;
 
@@ -25,7 +25,7 @@ impl<R: Rng> Material<R> for Specular {
         _: &UnitVector3<f32>,
         _: &UnitVector3<f32>,
     ) -> Spectrum {
-        Spectrum::new(Vector3::new(0.9, 0.9, 0.9))
+        Spectrum::from_linear_rgb(&[0.99, 0.99, 0.99].into())
     }
 
     fn emission(
@@ -34,6 +34,6 @@ impl<R: Rng> Material<R> for Specular {
         _: &UnitVector3<f32>,
         _: &UnitVector3<f32>,
     ) -> Spectrum {
-        Spectrum::new(Vector3::zeros())
+        Spectrum::black()
     }
 }

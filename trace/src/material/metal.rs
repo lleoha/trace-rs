@@ -1,9 +1,9 @@
 use crate::material::Material;
 use crate::math::utils::{fresnel, reflect};
 use crate::shape::Intersection;
-use crate::spectrum::Spectrum;
 use na::{Complex, UnitVector3};
 use rand::Rng;
+use crate::color::spectrum::Spectrum;
 
 pub struct Metal {
     refraction_index: Complex<f32>,
@@ -37,7 +37,7 @@ impl<R: Rng> Material<R> for Metal {
         let f = fresnel(cos_theta_i, eta);
         let reflective_attenuation = (f.r_p + f.r_s) * 0.5; // un-polarized light
 
-        Spectrum::ones() * reflective_attenuation
+        Spectrum::white() * reflective_attenuation
     }
 
     fn emission(
@@ -46,6 +46,6 @@ impl<R: Rng> Material<R> for Metal {
         _incoming: &UnitVector3<f32>,
         _outgoing: &UnitVector3<f32>,
     ) -> Spectrum {
-        Spectrum::zeros()
+        Spectrum::black()
     }
 }

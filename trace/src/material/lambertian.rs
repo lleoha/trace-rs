@@ -1,10 +1,10 @@
 use crate::material::Material;
 use crate::math::distribution::CosineUnitHemisphere;
 use crate::shape::Intersection;
-use crate::spectrum::Spectrum;
 use na::UnitVector3;
 use rand::Rng;
 use rand_distr::Distribution;
+use crate::color::spectrum::Spectrum;
 
 pub struct Lambertian {
     albedo: Spectrum,
@@ -47,7 +47,7 @@ impl<R: Rng> Material<R> for Lambertian {
         if incoming.dot(&intersection.normal) < 0.0 {
             self.emission
         } else {
-            Spectrum::zeros()
+            Spectrum::black()
         }
     }
 }
