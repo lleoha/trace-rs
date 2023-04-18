@@ -1,3 +1,4 @@
+use crate::color::spectrum::Spectrum;
 use crate::math::Ray;
 use crate::scene::Scene;
 use image::{ImageBuffer, Rgb};
@@ -7,7 +8,6 @@ use rayon::prelude::*;
 use std::sync::atomic::AtomicU32;
 use std::sync::atomic::Ordering::Relaxed;
 use std::sync::{Arc, Mutex};
-use crate::color::spectrum::Spectrum;
 
 pub struct Renderer {
     width: u32,
@@ -49,7 +49,10 @@ impl Renderer {
                         color + self.trace(&mut rng, scene, ray, soft_max_depth, hard_max_depth);
                 }
                 color = color * (1.0 / samples as f32);
-                buffer.lock().unwrap().put_pixel(x, y, Rgb(color.to_srgb().as_ref().clone()));
+                buffer
+                    .lock()
+                    .unwrap()
+                    .put_pixel(x, y, Rgb(*color.to_srgb().as_ref()));
             }
 
             println!("{}/{}", counter.fetch_add(1, Relaxed), self.height);

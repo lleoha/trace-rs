@@ -1,9 +1,9 @@
+use crate::color::spectrum::Spectrum;
 use crate::material::Material;
 use crate::math::utils::{fresnel, reflect, refract};
 use crate::shape::Intersection;
 use na::UnitVector3;
 use rand::Rng;
-use crate::color::spectrum::Spectrum;
 
 pub struct Translucent {
     refractive_index: f32,

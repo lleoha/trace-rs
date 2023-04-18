@@ -8,10 +8,10 @@ pub use self::lambertian::Lambertian;
 pub use self::metal::Metal;
 pub use self::specular::Specular;
 pub use self::translucent::Translucent;
+use crate::color::spectrum::Spectrum;
 use crate::shape::Intersection;
 use na::UnitVector3;
 use rand::Rng;
-use crate::color::spectrum::Spectrum;
 
 pub trait Material<R: Rng> {
     fn scatter(

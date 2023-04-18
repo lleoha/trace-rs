@@ -1,14 +1,14 @@
-use std::ops::Deref;
 use num_complex::Complex;
 use rand::Rng;
+use std::ops::Deref;
 use trace::camera::PinholeCamera;
 use trace::color::spectrum::Spectrum;
-use trace::material::{Lambertian, Metal};
+use trace::material::{Lambertian, Metal, Translucent};
 
+use crate::data::{GREEN, LIGHT, RED, WHITE};
 use trace::scene::Scene;
 use trace::shape::Quad;
 use trace::shape::Sphere;
-use crate::data::{GREEN, LIGHT, RED, WHITE};
 
 pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
     let floor_material = Lambertian::new(Spectrum::from(WHITE.deref()), Spectrum::black());
@@ -19,10 +19,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         floor_material,
     );
 
-    let light_material = Lambertian::new(
-        Spectrum::white() * 0.78,
-        Spectrum::from(LIGHT.deref()),
-    );
+    let light_material = Lambertian::new(Spectrum::white() * 0.78, Spectrum::from(LIGHT.deref()));
     let light = Quad::from_points(
         [343.0, 549.9, 227.0],
         [343.0, 549.9, 332.0],
@@ -46,8 +43,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         back_wall_material,
     );
 
-    let right_wall_material =
-        Lambertian::new(Spectrum::from(RED.deref()), Spectrum::black());
+    let right_wall_material = Lambertian::new(Spectrum::from(RED.deref()), Spectrum::black());
     let right_wall = Quad::from_points(
         [0.0, 0.0, 550.0],
         [0.0, 0.0, 0.0],
@@ -55,8 +51,7 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
         right_wall_material,
     );
 
-    let left_wall_material =
-        Lambertian::new(Spectrum::from(GREEN.deref()), Spectrum::black());
+    let left_wall_material = Lambertian::new(Spectrum::from(GREEN.deref()), Spectrum::black());
     let left_wall = Quad::from_points(
         [550.0, 0.0, 0.0],
         [550.0, 0.0, 550.0],
@@ -67,8 +62,8 @@ pub fn create_cornell_box<R: Rng + 'static>() -> Scene<R> {
     let sphere1_silver = Metal::new(Complex::new(0.051585, 3.9046));
     let sphere_1 = Sphere::new([294.0, 120.0, 350.0].into(), 120.0, sphere1_silver);
 
-    let sphere2_silver = Metal::new(Complex::new(0.051585, 3.9046));
-    let sphere_2 = Sphere::new([400.0, 80.0, 150.0].into(), 80.0, sphere2_silver);
+    let sphere2_translucent = Translucent::new(1.5168);
+    let sphere_2 = Sphere::new([400.0, 80.0, 150.0].into(), 80.0, sphere2_translucent);
 
     let camera = PinholeCamera::new(
         &[278.0, 273.0, -800.0].into(),

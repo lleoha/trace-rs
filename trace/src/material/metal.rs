@@ -1,9 +1,9 @@
+use crate::color::spectrum::Spectrum;
 use crate::material::Material;
 use crate::math::utils::{fresnel, reflect};
 use crate::shape::Intersection;
 use na::{Complex, UnitVector3};
 use rand::Rng;
-use crate::color::spectrum::Spectrum;
 
 pub struct Metal {
     refraction_index: Complex<f32>,

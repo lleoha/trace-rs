@@ -2,7 +2,7 @@
 This is yet another ray tracer (with global illumination).
 It renders following image in ~15 minutes in the current state of the project with 10k samples/pixel:
 
-![cornell box](docs/cornell_10k.png)
+![cornell box](docs/cornell_15k.png)
 
 And following images in ~5m with 10k samples:
 

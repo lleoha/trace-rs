@@ -1,10 +1,10 @@
+use crate::color::spectrum::Spectrum;
 use crate::material::Material;
 use crate::math::distribution::CosineUnitHemisphere;
 use crate::shape::Intersection;
 use na::UnitVector3;
 use rand::Rng;
 use rand_distr::Distribution;
-use crate::color::spectrum::Spectrum;
 
 pub struct Lambertian {
     albedo: Spectrum,

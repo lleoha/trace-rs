@@ -1,6 +1,6 @@
-use std::ops::{Add, Mul};
-use nalgebra::{SVector, Vector3};
 use crate::color::data::{CIE_XYZ_1931_2DEG_10NM, RGB_COMPONENTS, XYZ_TO_LINEAR_RGB};
+use nalgebra::{SVector, Vector3};
+use std::ops::{Add, Mul};
 
 // represents spectrum 380-780 nm in 10 nm bins (hence 41 bins)
 #[derive(Copy, Clone)]
@@ -20,9 +20,7 @@ impl Spectrum {
         let g = RGB_COMPONENTS.column(1) * linear_rgb.y;
         let b = RGB_COMPONENTS.column(2) * linear_rgb.z;
 
-        Self {
-            inner: r + g + b,
-        }
+        Self { inner: r + g + b }
     }
 
     pub fn from_srgb(srgb: &Vector3<f32>) -> Self {
@@ -59,8 +57,7 @@ impl Spectrum {
     }
 
     pub fn to_srgb(&self) -> Vector3<f32> {
-        self.to_linear_rgb()
-            .map(Self::gamma)
+        self.to_linear_rgb().map(Self::gamma)
     }
 
     fn gamma(x: f32) -> f32 {
@@ -90,16 +87,14 @@ impl Spectrum {
 
 impl From<SVector<f32, 41>> for Spectrum {
     fn from(value: SVector<f32, 41>) -> Self {
-        Self {
-            inner: value,
-        }
+        Self { inner: value }
     }
 }
 
 impl From<&SVector<f32, 41>> for Spectrum {
     fn from(value: &SVector<f32, 41>) -> Self {
         Self {
-            inner: value.clone(),
+            inner: *value,
         }
     }
 }
@@ -109,7 +104,7 @@ impl Add<Spectrum> for Spectrum {
 
     fn add(self, rhs: Spectrum) -> Self::Output {
         Self::Output {
-            inner: self.inner + &rhs.inner,
+            inner: self.inner + rhs.inner,
         }
     }
 }
@@ -119,7 +114,7 @@ impl Add<&Spectrum> for Spectrum {
 
     fn add(self, rhs: &Spectrum) -> Self::Output {
         Self::Output {
-            inner: &self.inner + &rhs.inner,
+            inner: self.inner + rhs.inner,
         }
     }
 }
@@ -149,7 +144,24 @@ impl Mul<f32> for Spectrum {
 
     fn mul(self, rhs: f32) -> Self::Output {
         Self::Output {
-            inner: &self.inner * rhs,
+            inner: self.inner * rhs,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::color::data::D65_ILLUM;
+    
+    use std::ops::Deref;
+
+    #[test]
+    fn test() {
+        let spec = Spectrum::from_srgb(&[1.0, 1.0, 1.0].into())
+            * Spectrum::from(D65_ILLUM.deref())
+            * (1.0 / 100.0);
+        let rgb = spec.to_srgb();
+        println!("{}", &rgb);
     }
 }

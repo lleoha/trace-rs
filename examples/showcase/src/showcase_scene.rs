@@ -1,6 +1,8 @@
 use num_complex::Complex;
 use rand::Rng;
+use std::ops::Deref;
 use trace::camera::PinholeCamera;
+use trace::color::data::D65_ILLUM;
 use trace::color::spectrum::Spectrum;
 use trace::material::{Lambertian, Metal, Translucent};
 use trace::scene::Scene;
@@ -8,7 +10,7 @@ use trace::shape::{Quad, Sphere, Triangle};
 
 pub fn create_scene<R: Rng + 'static>() -> Scene<R> {
     let floor_material = Lambertian::new(
-        Spectrum::from_srgb(&[0.5, 0.9, 0.3].into()),
+        Spectrum::from_srgb_u8(&[127, 230, 75].into()),
         Spectrum::black(),
     );
     let floor = Quad::from_points(
@@ -18,7 +20,8 @@ pub fn create_scene<R: Rng + 'static>() -> Scene<R> {
         floor_material,
     );
 
-    let light_material = Lambertian::new(Spectrum::black(), Spectrum::white() * 1.5);
+    let light_material =
+        Lambertian::new(Spectrum::black(), Spectrum::from(D65_ILLUM.deref()) * 0.015);
     let light = Quad::new(
         [-10.0, 10.0, -5.0].into(),
         [10.0, 10.0, -5.0].into(),
@@ -35,8 +38,8 @@ pub fn create_scene<R: Rng + 'static>() -> Scene<R> {
     );
 
     let triangle_material = Lambertian::new(
-        Spectrum::from_srgb(&[0.0, 0.0, 0.9].into()),
-        Spectrum::black()
+        Spectrum::from_srgb_u8(&[0, 0, 230].into()),
+        Spectrum::black(),
     );
     let triangle = Triangle::from_points(
         &[0.7, 0.5, -3.0].into(),
@@ -46,8 +49,8 @@ pub fn create_scene<R: Rng + 'static>() -> Scene<R> {
     );
 
     let matte = Lambertian::new(
-        Spectrum::from_srgb(&[0.9, 0.5, 0.0].into()),
-        Spectrum::black()
+        Spectrum::from_srgb_u8(&[230, 127, 0].into()),
+        Spectrum::black(),
     );
     let matte_ball = Sphere::new([-2.0, 0.71, 0.0].into(), 0.7, matte);
 

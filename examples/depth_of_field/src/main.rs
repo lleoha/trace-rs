@@ -13,7 +13,11 @@ fn main() -> Result<(), Box<dyn Error>> {
     let width = 1920 / 2;
     let height = 1080 / 2;
     let scene = create_scene();
-    let renderer = Renderer::new(width, height, Spectrum::from_srgb(&[0.01, 0.05, 0.1].into()));
+    let renderer = Renderer::new(
+        width,
+        height,
+        Spectrum::from_srgb(&[0.01, 0.05, 0.1].into()),
+    );
 
     let start = Instant::now();
     let image = renderer.render(&scene, 10_000, 10, 50);
